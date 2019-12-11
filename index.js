@@ -53,6 +53,9 @@ app.use((err, req, res, next) => {
 
 app.use('/users', require('./routes/users'))
 app.use('/admins', require('./routes/admins'))
+app.use('/executives', require('./routes/executives'))
+app.use('/employers', require('./routes/employers'))
+app.use('/tasks', require('./routes/tasks'))
 
 app.get('/', (req, res) => {
     res.send({

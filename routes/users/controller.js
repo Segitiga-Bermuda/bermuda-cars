@@ -15,7 +15,7 @@ module.exports = {
                 .findAll({
                     where: {
                         email: req.body.email,
-                        role: 'user'
+                        role: 'User'
                     },
                     attributes: [
                         'id',
@@ -85,10 +85,14 @@ module.exports = {
                             .create({
                                 id: null,
                                 fullName: req.body.fullName,
+                                born: req.body.born,
+                                gender: req.body.gender,
+                                employerId: req.body.employerId || 'None',
+                                departement: req.body.departement || 'None',
                                 email: req.body.email,
                                 password: password,
-                                avatarPath: './',
-                                role: 'user',
+                                role: 'User',
+                                avatarPath: './assets/images/person.png',
                                 createdAt: null,
                                 updatedAt: null
                             })

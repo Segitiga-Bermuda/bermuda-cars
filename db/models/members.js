@@ -14,6 +14,28 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false
             },
+            born: {
+                type: DataTypes.DATE,
+                allowNull: false
+            },
+            gender: {
+                type: DataTypes.ENUM({
+                    values: [
+                        'Male', 'Female'
+                    ]
+                }),
+                allowNull: false
+            },
+            employerId: {
+                type: DataTypes.STRING,
+                allowNull: true,
+                defaultValue: 'None'
+            },
+            departement: {
+                type: DataTypes.STRING,
+                allowNull: true,
+                defaultValue: 'None'
+            },
             email: {
                 type: DataTypes.STRING,
                 allowNull: false,
@@ -23,20 +45,18 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false
             },
-            avatarPath: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
             role: {
                 type: DataTypes.ENUM({
                     values: [
-                        'admin',
-                        'executive',
-                        'employer',
-                        'user'
+                        'admin', 'employer', 'user'
                     ]
                 }),
                 allowNull: false
+            },
+            avatarPath: {
+                type: DataTypes.STRING,
+                allowNull: true,
+                defaultValue: './assets/images/person.png'
             }
         },
         {}
