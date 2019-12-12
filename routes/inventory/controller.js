@@ -27,7 +27,7 @@ module.exports = {
       await Inventories
       .findAll({
         where: {
-          id: req.params.id
+          id: req.user.id
           // id: user.id
         }
       })
@@ -48,7 +48,7 @@ module.exports = {
     try {
      await Inventories
      .create({
-        id: id,
+        id: req.user.id,
         // id: user.id,
         item: req.body.item,
         price: req.body.price,
@@ -64,7 +64,7 @@ module.exports = {
         });
       });
     } catch (error) {
-      qconsole.log(error);
+      console.log(error);
     }
   },
 
@@ -83,6 +83,7 @@ updateOne: async (req, res) => {
             {
                 where: {
                 id: parseInt(req.params.id),
+                id: req.user.id
             
             }
         })
@@ -105,7 +106,8 @@ deleteOne: async (req, res) => {
     await Inventories
     .destroy({
       where: {
-        id: parseInt(req.params.id)
+        id: parseInt(req.params.id),
+        id: req.user.id
       }
     }).then(result => {
       res.send({
