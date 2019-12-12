@@ -21,8 +21,6 @@ module.exports = {
     },
     getById: (req, res) => {
         try {
-            console.log(req.user);
-            
             const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
 
             Tasks
@@ -38,6 +36,14 @@ module.exports = {
                     })
                 })
         } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                res.send({
+                    message: 'You must log in again!'
+                })
+
+                return null
+            }
+
             console.log(error)
         }
     },
@@ -59,6 +65,14 @@ module.exports = {
                     })
                 })
         } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                res.send({
+                    message: 'You must log in again!'
+                })
+
+                return null
+            }
+
             console.log(error)
         }
     },
@@ -80,6 +94,14 @@ module.exports = {
                     })
                 })
         } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                res.send({
+                    message: 'You must log in again!'
+                })
+
+                return null
+            }
+
             console.log(error)
         }
     },
@@ -114,6 +136,14 @@ module.exports = {
                         })
                 })
         } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                res.send({
+                    message: 'You must log in again!'
+                })
+
+                return null
+            }
+
             console.log(error)
         }
     },
@@ -144,6 +174,14 @@ module.exports = {
                         })
                 })
         } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                res.send({
+                    message: 'You must log in again!'
+                })
+
+                return null
+            }
+
             console.log(error)
         }
     },
@@ -178,6 +216,14 @@ module.exports = {
                         })
                 })
         } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                res.send({
+                    message: 'You must log in again!'
+                })
+
+                return null
+            }
+
             console.log(error)
         }
     },
@@ -212,6 +258,14 @@ module.exports = {
                         })
                 })
         } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                res.send({
+                    message: 'You must log in again!'
+                })
+
+                return null
+            }
+
             console.log(error)
         }
     }

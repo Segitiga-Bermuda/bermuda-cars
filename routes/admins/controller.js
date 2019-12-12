@@ -112,6 +112,14 @@ module.exports = {
                 })
             }
         } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                res.send({
+                    message: 'You must log in again!'
+                })
+
+                return null
+            }
+
             console.log(error)
         }
     }
