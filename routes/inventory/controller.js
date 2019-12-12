@@ -1,9 +1,4 @@
 const { Inventories } = require("../../db/models")
-// jwt = require('jsonwebtoken'),
-// {
-//     JWT_SECRET_KEY
-// } = require('../../config')
-
 
 module.exports = {
   getAll: async (req, res) => {
@@ -21,35 +16,26 @@ module.exports = {
     }
   },
 
-  getById: async (req, res) => {
-    // const user = jwt.verify(req.get("X-API-KEY"), JWT_SECRET_KEY);
-    try {
-      await Inventories
-      .findAll({
-        where: {
-          id: req.user.id
-          // id: user.id
-        }
-      })
-      .then(result => {
-        res.send({
-          message: "Get data by id.",
-          data: result
-        });
-      });
-    } catch (error) {
-      qconsole.log(error);
-    }
-  },
 
   addOne: async (req, res) => {
-    // const user = jwt.verify(req.get("X-API-KEY"), JWT_SECRET_KEY);
-
+    
     try {
+      if(
+        !(
+          req.user.role === 'Admin' ||
+          req.user.role === 'Executive' ||
+          req.user.role === 'Employer'
+        ) 
+    ){
+      res.send({
+        message: 'ordinary user cant edit this data'
+      })
+      return null
+    }
+
      await Inventories
      .create({
-        id: req.user.id,
-        // id: user.id,
+        id: req.params.id,
         item: req.body.item,
         price: req.body.price,
         materialCost: req.body.materialCost,
@@ -57,20 +43,35 @@ module.exports = {
         overheadCost: req.body.overheadCost
       })
       .then(result => {
-        Inventories;
-        res.send({
-          message: "Data is successfully added.",
-          data: result
-        });
-      });
+        Inventories
+            .findAll({})
+            .then(result2 => {
+                res.send({
+                    message: 'Data is successfully added.',
+                    data: result2
+                })
+            })
+    })
     } catch (error) {
       console.log(error);
     }
   },
 
 updateOne: async (req, res) => {
-      // const user = jwt.verify(req.get("X-API-KEY"), JWT_SECRET_KEY);  
+
   try {
+    if(
+      !(
+      req.user.role === 'Admin' ||
+      req.user.role === 'Executive' ||
+      req.user.role === 'Employer'
+      ) 
+  ){
+    res.send({
+      message: 'ordinary user cant edit this data'
+    })
+    return null
+  }
         await Inventories
         .update(
             {
@@ -82,17 +83,20 @@ updateOne: async (req, res) => {
             },
             {
                 where: {
-                id: parseInt(req.params.id),
-                id: req.user.id
+                id: parseInt(req.params.id)
             
             }
         })
         .then(result => {
-            res.send({
-                message: 'Data is successfully updated.',
-                data: result
-            })
-        })
+          Inventories
+              .findAll({})
+              .then(result2 => {
+                  res.send({
+                      message: 'Data is successfully updated.',
+                      data: result2
+                  })
+              })
+      })
     } catch (error) {
         console.log(error);
         
@@ -100,21 +104,34 @@ updateOne: async (req, res) => {
     }
 },
 deleteOne: async (req, res) => {
-  // const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
 
   try {
+    if( !(
+      req.user.role === 'Admin' ||
+      req.user.role === 'Executive' ||
+      req.user.role === 'Employer' 
+    )
+    ){
+    res.send({
+      message: 'ordinary user cant edit this data'
+    })
+    return null
+  }
     await Inventories
     .destroy({
       where: {
         id: parseInt(req.params.id),
-        id: req.user.id
       }
-    }).then(result => {
-      res.send({
-        message: "Delete Data",
-        data: result
-      });
-    });
+    })  .then(result => {
+      Inventories
+          .findAll({})
+          .then(result2 => {
+              res.send({
+                  message: 'Data is successfully deleted.',
+                  data: result2
+              })
+          })
+  })
   } catch (error) {
     console.log(error);
   }
@@ -122,7 +139,3 @@ deleteOne: async (req, res) => {
 
 
 };
-
-
-
-//jwtnya blom dipake 
