@@ -56,6 +56,7 @@ app.use('/admins', require('./routes/admins'))
 app.use('/executives', require('./routes/executives'))
 app.use('/employers', require('./routes/employers'))
 app.use('/tasks', require('./routes/tasks'))
+app.use('/inventory', require('./routes/inventory'))
 
 app.get('/', (req, res) => {
     res.send({
