@@ -1,8 +1,8 @@
 const router = require('express').Router(),
-    invController = require('./controllerr')
+    invController = require('./controller')
 
 router.get('/', invController.getById)
-router.post('/add', tasksController.addOne)
+router.post('/add', invController.addOne)
 router.delete('/:id', invController.deleteOne)
 router.put('/:id', invController.updateOne)
 

@@ -21,6 +21,8 @@ module.exports = {
     },
     getById: (req, res) => {
         try {
+            console.log(req.user);
+            
             const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
 
             Tasks
