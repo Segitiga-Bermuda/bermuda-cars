@@ -21,12 +21,10 @@ module.exports = {
     },
     getById: (req, res) => {
         try {
-            const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
-
             Tasks
                 .findAll({
                     where: {
-                        userId: user.id
+                        userId: req.user.id
                     }
                 })
                 .then(result => {
@@ -48,13 +46,11 @@ module.exports = {
         }
     },
     getCompleted: (req, res) => {
-        const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
-
         try {
             Tasks
                 .findAll({
                     where: {
-                        userId: user.id,
+                        userId: req.user.id,
                         status: 'completed'
                     }
                 })
@@ -77,13 +73,11 @@ module.exports = {
         }
     },
     getUncompleted: (req, res) => {
-        const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
-
         try {
             Tasks
                 .findAll({
                     where: {
-                        userId: user.id,
+                        userId: req.user.id,
                         status: 'uncompleted'
                     }
                 })
@@ -106,8 +100,6 @@ module.exports = {
         }
     },
     deleteOne: (req, res) => {
-        const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
-
         try {
             Tasks
                 .update(
@@ -117,7 +109,7 @@ module.exports = {
                     {
                         where: {
                             id: parseInt(req.params.id),
-                            userId: user.id
+                            userId: req.user.id
                         }
                     }
                 )
@@ -125,7 +117,7 @@ module.exports = {
                     Tasks
                         .findAll({
                             where: {
-                                userId: user.id
+                                userId: req.user.id
                             }
                         })
                         .then(result2 => {
@@ -148,12 +140,10 @@ module.exports = {
         }
     },
     addOne: (req, res) => {
-        const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
-
         try {
             Tasks
                 .create({
-                    userId: user.id,
+                    userId: req.user.id,
                     task: req.body.task,
                     status: 'uncompleted',
                     createdAt: null,
@@ -163,7 +153,7 @@ module.exports = {
                     Tasks
                         .findAll({
                             where: {
-                                userId: user.id
+                                userId: req.user.id
                             }
                         })
                         .then(result2 => {
@@ -186,8 +176,6 @@ module.exports = {
         }
     },
     updateOne: (req, res) => {
-        const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
-
         try {
             Tasks
                 .update(
@@ -197,7 +185,7 @@ module.exports = {
                     {
                         where: {
                             id: parseInt(req.params.id),
-                            userId: user.id
+                            userId: req.user.id
                         }
                     }
                 )
@@ -205,7 +193,7 @@ module.exports = {
                     Tasks
                         .findAll({
                             where: {
-                                userId: user.id
+                                userId: req.user.id
                             }
                         })
                         .then(result2 => {
@@ -228,8 +216,6 @@ module.exports = {
         }
     },
     setAsCompleted: (req, res) => {
-        const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
-
         try {
             Tasks
                 .update(
@@ -239,7 +225,7 @@ module.exports = {
                     {
                         where: {
                             id: parseInt(req.params.id),
-                            userId: user.id
+                            userId: req.user.id
                         }
                     }
                 )
@@ -247,7 +233,7 @@ module.exports = {
                     Tasks
                         .findAll({
                             where: {
-                                userId: user.id
+                                userId: req.user.id
                             }
                         })
                         .then(result2 => {

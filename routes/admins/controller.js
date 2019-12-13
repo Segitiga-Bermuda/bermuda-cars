@@ -67,9 +67,7 @@ module.exports = {
     },
     register: async (req, res) => {
         try {
-            const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
-
-            if (user.role === 'Admin') {
+            if (req.user.role === 'Admin') {
                 await Members
                     .findAll({
                         where: {
