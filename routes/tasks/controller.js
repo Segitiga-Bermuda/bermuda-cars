@@ -21,14 +21,10 @@ module.exports = {
     },
     getById: (req, res) => {
         try {
-            console.log(req.user);
-            
-            const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
-
             Tasks
                 .findAll({
                     where: {
-                        userId: user.id
+                        userId: req.user.id
                     }
                 })
                 .then(result => {
@@ -38,17 +34,23 @@ module.exports = {
                     })
                 })
         } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                res.send({
+                    message: 'You must log in again!'
+                })
+
+                return null
+            }
+
             console.log(error)
         }
     },
     getCompleted: (req, res) => {
-        const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
-
         try {
             Tasks
                 .findAll({
                     where: {
-                        userId: user.id,
+                        userId: req.user.id,
                         status: 'completed'
                     }
                 })
@@ -59,17 +61,23 @@ module.exports = {
                     })
                 })
         } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                res.send({
+                    message: 'You must log in again!'
+                })
+
+                return null
+            }
+
             console.log(error)
         }
     },
     getUncompleted: (req, res) => {
-        const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
-
         try {
             Tasks
                 .findAll({
                     where: {
-                        userId: user.id,
+                        userId: req.user.id,
                         status: 'uncompleted'
                     }
                 })
@@ -80,12 +88,18 @@ module.exports = {
                     })
                 })
         } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                res.send({
+                    message: 'You must log in again!'
+                })
+
+                return null
+            }
+
             console.log(error)
         }
     },
     deleteOne: (req, res) => {
-        const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
-
         try {
             Tasks
                 .update(
@@ -95,7 +109,7 @@ module.exports = {
                     {
                         where: {
                             id: parseInt(req.params.id),
-                            userId: user.id
+                            userId: req.user.id
                         }
                     }
                 )
@@ -103,7 +117,7 @@ module.exports = {
                     Tasks
                         .findAll({
                             where: {
-                                userId: user.id
+                                userId: req.user.id
                             }
                         })
                         .then(result2 => {
@@ -114,16 +128,22 @@ module.exports = {
                         })
                 })
         } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                res.send({
+                    message: 'You must log in again!'
+                })
+
+                return null
+            }
+
             console.log(error)
         }
     },
     addOne: (req, res) => {
-        const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
-
         try {
             Tasks
                 .create({
-                    userId: user.id,
+                    userId: req.user.id,
                     task: req.body.task,
                     status: 'uncompleted',
                     createdAt: null,
@@ -133,7 +153,7 @@ module.exports = {
                     Tasks
                         .findAll({
                             where: {
-                                userId: user.id
+                                userId: req.user.id
                             }
                         })
                         .then(result2 => {
@@ -144,12 +164,18 @@ module.exports = {
                         })
                 })
         } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                res.send({
+                    message: 'You must log in again!'
+                })
+
+                return null
+            }
+
             console.log(error)
         }
     },
     updateOne: (req, res) => {
-        const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
-
         try {
             Tasks
                 .update(
@@ -159,7 +185,7 @@ module.exports = {
                     {
                         where: {
                             id: parseInt(req.params.id),
-                            userId: user.id
+                            userId: req.user.id
                         }
                     }
                 )
@@ -167,7 +193,7 @@ module.exports = {
                     Tasks
                         .findAll({
                             where: {
-                                userId: user.id
+                                userId: req.user.id
                             }
                         })
                         .then(result2 => {
@@ -178,12 +204,18 @@ module.exports = {
                         })
                 })
         } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                res.send({
+                    message: 'You must log in again!'
+                })
+
+                return null
+            }
+
             console.log(error)
         }
     },
     setAsCompleted: (req, res) => {
-        const user = jwt.verify(req.get('X-API-KEY'), JWT_SECRET_KEY)
-
         try {
             Tasks
                 .update(
@@ -193,7 +225,7 @@ module.exports = {
                     {
                         where: {
                             id: parseInt(req.params.id),
-                            userId: user.id
+                            userId: req.user.id
                         }
                     }
                 )
@@ -201,7 +233,7 @@ module.exports = {
                     Tasks
                         .findAll({
                             where: {
-                                userId: user.id
+                                userId: req.user.id
                             }
                         })
                         .then(result2 => {
@@ -212,6 +244,14 @@ module.exports = {
                         })
                 })
         } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                res.send({
+                    message: 'You must log in again!'
+                })
+
+                return null
+            }
+
             console.log(error)
         }
     }
