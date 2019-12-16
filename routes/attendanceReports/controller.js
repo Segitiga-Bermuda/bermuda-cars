@@ -1,4 +1,5 @@
 const { AttendanceReports } = require("../../db/models");
+const sequelize = require('sequelize')
 
 module.exports = {
     addReport: (req, res) => {
@@ -21,50 +22,52 @@ module.exports = {
                 let now = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate()
                 
                 console.log(now)
-                // try {
-                //     AttendanceReports
-                //         .findAll({
-                //             where: {
-                //                 date: now
-                //             }
-                //         })
-                //         .then(result => {
-                //             console.log(result);
+                
+                try {
+                    AttendanceReports
+                        .findAll({
+                            where: {
+                                date: sequelize.where(sequelize.col('date'), "=",now),
+                                userId: req.user.id,
+                            }
+                        })
+                        .then(result => {
+                            console.log(result);
                             
-                //             if(result.length > 0) {
-                //                 res.send({
-                //                     message: 'You have been check in today.'
-                //                 })
+                            if(result.length > 0) {
+                                res.send({
+                                    message: 'You have been check in today.'
+                                })
 
-                //                 return null
-                //             }
+                                return null
+                            }
         
-                //             AttendanceReports
-                //                 .create({
-                //                     userId: req.user.id,
-                //                     status: req.body.status,
-                //                     date: now
-                //                 })
-                //                 .then(result2 => {
-                //                     AttendanceReports
-                //                         .findAll({})
-                //                         .then(result3 => {
-                //                             res.send({
-                //                                 message: "Data is successfully added.",
-                //                                 data: result3
-                //                             });
-                //                         });
-                //                 })
-                //                 .catch (error => {
-                //                     console.log(error);
-                //                 })
-                //         })
-                //         .catch(error => {
-                //             console.log(error);
-                //         })
-                // } catch(error) {
-                //     console.log(error)
-                // }
+                            AttendanceReports
+                                .create({
+                                    userId: req.user.id,
+                                    status: req.body.status,
+                                    date: now
+                                })
+                                .then(result2 => {
+                                    AttendanceReports
+                                        .findAll({})
+                                        .then(result3 => {
+                                            res.send({
+                                                message: "Data is successfully added.",
+                                                data: result3
+                                            });
+                                        });
+                                })
+                                .catch (error => {
+                                    console.log(error);
+                                })
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                } catch(error) {
+                    console.log(error)
+                }
             } 
         } catch(error) {
             console.log(error)
