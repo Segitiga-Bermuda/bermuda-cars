@@ -1,6 +1,6 @@
 const { AttendanceReports } = require("../../db/models");
-const sequelize = require('sequelize')
-
+const Sequelize = require('sequelize')
+const db = require("../../db/models");
 module.exports = {
     addReport: (req, res) => {
         try {
@@ -14,7 +14,7 @@ module.exports = {
             }
 
             if (
-                currentDate.getHours() < 5 || 
+                currentDate.getHours() < 6 || 
                 currentDate.getHours() > 16
             ) {
                 res.send({ message: "You Are Late " });
@@ -27,7 +27,7 @@ module.exports = {
                     AttendanceReports
                         .findAll({
                             where: {
-                                date: sequelize.where(sequelize.col('date'), "=",now),
+                                date: Sequelize.where(Sequelize.col('date'), "=",now),
                                 userId: req.user.id,
                             }
                         })
@@ -72,5 +72,34 @@ module.exports = {
         } catch(error) {
             console.log(error)
         }
-    }
+    },
+
+    getAll: (req, res) => {
+        try {
+          db.sequelize
+            .query(
+              "SELECT fullName, employerId, departement, role, date, status FROM AttendanceReports JOIN Members ON AttendanceReports.userId = Members.id",
+              { type: Sequelize.QueryTypes.SELECT }
+              
+            )
+            .then(result => {
+              console.log(result);
+                res.status(200).send({
+                  message: "Get all datas.",
+                  data: result
+                  
+             });
+            })
+            .catch(error => console.log(error));
+        } catch (error) {
+          console.log(error);
+        }
+    
+    
+    
+    
+      },
+
+
+
 }
