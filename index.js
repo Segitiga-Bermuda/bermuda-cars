@@ -58,6 +58,8 @@ app.use('/employers', require('./routes/employers'))
 app.use('/tasks', require('./routes/tasks'))
 app.use('/inventory', require('./routes/inventory'))
 app.use('/attreport', require('./routes/attendanceReports'))
+app.use('/sales', require('./routes/sales'))
+
 
 
 app.get('/', (req, res) => {
