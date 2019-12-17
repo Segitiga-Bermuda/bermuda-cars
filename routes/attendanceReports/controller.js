@@ -78,7 +78,7 @@ module.exports = {
         try {
           db.sequelize
             .query(
-              "SELECT fullName, employerId, departement, role, date, status FROM AttendanceReports JOIN Members ON AttendanceReports.userId = Members.id",
+              "SELECT userId, AttendanceReports.id, fullName, employerId, departement, role, date, status FROM AttendanceReports JOIN Members ON AttendanceReports.userId = Members.id",
               { type: Sequelize.QueryTypes.SELECT }
               
             )
@@ -94,12 +94,84 @@ module.exports = {
         } catch (error) {
           console.log(error);
         }
-    
-    
-    
-    
       },
 
+
+deleteOne: async (req, res) => {
+
+    try {
+      if( !(
+        req.user.role === 'Admin' ||
+        req.user.role === 'Executive' )
+      ){
+      res.send({
+        message: 'ordinary user cant edit this data'
+      })
+      return null
+    }
+      await AttendanceReports
+      .destroy({
+        where: {
+          id: parseInt(req.params.id),
+        }
+      })  .then(result => {
+        AttendanceReports
+            .findAll({})
+            .then(result2 => {
+                res.send({
+                    message: 'Data is successfully deleted.',
+                    data: result2
+                })
+            })
+    })
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  
+  
+  
+  updateOne: async (req, res) => {
+  
+    try {
+      if(
+        !(
+        req.user.role === 'Admin' ||
+        req.user.role === 'Executive' 
+        ) 
+    ){
+      res.send({
+        message: 'ordinary user cant edit this data'
+      })
+      return null
+    }
+          await AttendanceReports
+          .update(
+              {
+                status: req.body.status
+              },
+              {
+                  where: {
+                  id: parseInt(req.params.id)
+              
+              }
+          })
+          .then(result => {
+            AttendanceReports
+                .findAll({})
+                .then(result2 => {
+                    res.send({
+                        message: 'Data is successfully updated.',
+                        data: result2
+                    })
+                })
+        })
+      } catch (error) {
+          console.log(error);
+          
+          
+      }
+  },
 
 
 }
