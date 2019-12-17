@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false
             },
+            color: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
             price: {
                 type: DataTypes.INTEGER,
                 allowNull: false
@@ -31,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false
             },
             profit: {
+                type: DataTypes.INTEGER,
+                allowNull: false
+            },
+            totalCost: {
                 type: DataTypes.INTEGER,
                 allowNull: false
             }

@@ -1,5 +1,6 @@
 const { Inventories } = require("../../db/models")
 
+
 module.exports = {
   getAll: async (req, res) => {
     try {
@@ -17,8 +18,8 @@ module.exports = {
   },
 
 
-  addOne: async (req, res) => {
-    
+  addOne: async (req, res) => { 
+
     try {
       if(
         !(
@@ -40,7 +41,10 @@ module.exports = {
         price: req.body.price,
         materialCost: req.body.materialCost,
         laborCost: req.body.laborCost,
-        overheadCost: req.body.overheadCost
+        overheadCost: req.body.overheadCost,
+        color: req.body.color,
+        profit: parseInt(req.body.price) - parseInt(req.body.materialCost) - parseInt(req.body.laborCost) - parseInt(req.body.overheadCost),
+        totalCost: parseInt(req.body.materialCost) + parseInt(req.body.laborCost) + parseInt(req.body.overheadCost)
       })
       .then(result => {
         Inventories
@@ -117,7 +121,7 @@ deleteOne: async (req, res) => {
     })
     return null
   }
-    await Inventories
+    await Sales
     .destroy({
       where: {
         id: parseInt(req.params.id),
