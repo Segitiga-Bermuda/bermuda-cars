@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
             overheadCost: {
                 type: DataTypes.INTEGER,
                 allowNull: false
+            },
+            profit: {
+                type: DataTypes.INTEGER,
+                allowNull: false
             }
         })
 
