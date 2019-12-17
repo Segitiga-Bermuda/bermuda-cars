@@ -7,8 +7,8 @@ module.exports = {
             let currentDate = new Date();
       
             if (
-                currentDate.getDay() === 0 || 
-                currentDate.getDay() === 6
+                currentDate.getDay() === 5 || 
+                currentDate.getDay() === 9
             ) {
                 res.send({ message: "This is weekend." });
             }
