@@ -70,5 +70,40 @@ module.exports = {
         } catch (error) {
             console.log(error)
         }
-    }
+    },
+    updateOne:(req,res) => {
+        try {
+            Members.update(
+                {
+                fullName: req.body.fullName,
+                email: req.body.email,
+                password: req.body.password
+            }
+            ).then(result => {
+                res.send({
+                    message:"Update Data",
+                    data: result
+                })
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    updateAvatar:(req,res) => {
+        try {
+            Members.update(
+                {
+                avatarPath: req.body.avatarPath
+            }
+            ).then(result => {
+                res.send({
+                    message:"Update Avatar",
+                    data: result
+                })
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    },
 }
