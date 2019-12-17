@@ -67,8 +67,7 @@ updateOne: async (req, res) => {
     if(
       !(
       req.user.role === 'Admin' ||
-      req.user.role === 'Executive' ||
-      req.user.role === 'Employer'
+      req.user.role === 'Executive'
       ) 
   ){
     res.send({
@@ -112,8 +111,7 @@ deleteOne: async (req, res) => {
   try {
     if( !(
       req.user.role === 'Admin' ||
-      req.user.role === 'Executive' ||
-      req.user.role === 'Employer' 
+      req.user.role === 'Executive' 
     )
     ){
     res.send({
