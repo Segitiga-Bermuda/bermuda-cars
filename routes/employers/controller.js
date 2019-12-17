@@ -20,6 +20,8 @@ module.exports = {
                     attributes: [
                         'id',
                         'fullName',
+                        'employerId',
+                        'departement',
                         'password',
                         'avatarPath',
                         'role'
@@ -30,6 +32,8 @@ module.exports = {
                         const decision = await comparePassword(req.body.password, result[0].password),
                             id = result[0].id,
                             fullName = result[0].fullName,
+                            employerId = result[0].employerId,
+                            departement = result[0].departement,
                             avatarPath = result[0].avatarPath,
                             role = result[0].role
 
@@ -38,6 +42,8 @@ module.exports = {
                                 {
                                     id,
                                     fullName,
+                                    employerId,
+                                    departement,
                                     avatarPath,
                                     role
                                 },
