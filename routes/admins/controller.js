@@ -131,11 +131,14 @@ module.exports = {
     updateOne: async (req,res) => {
         try {
             await Members
+            const password = await hashPassword(req.body.password)
+
                 .update(
+                    
                     {
                         fullName: req.body.fullName,
                         email: req.body.email,
-                        password: req.body.password,
+                        password: password,
                     },
                     {
                         where: {

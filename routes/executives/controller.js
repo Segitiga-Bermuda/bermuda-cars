@@ -73,11 +73,12 @@ module.exports = {
     },
     updateOne:(req,res) => {
         try {
+            const password = await hashPassword(req.body.password)
             Members.update(
                 {
                 fullName: req.body.fullName,
                 email: req.body.email,
-                password: req.body.password
+                password: password
             },
             {
                 where: {
