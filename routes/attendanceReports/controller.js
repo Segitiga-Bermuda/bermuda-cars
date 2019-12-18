@@ -14,8 +14,9 @@ module.exports = {
       }
 
       if (
-        currentDate.getHours() < 6 ||
-        currentDate.getHours() > 16
+        false
+        // currentDate.getHours() < 6 ||
+        // currentDate.getHours() > 16
       ) {
         res.send({ message: "You Are Late " });
       } else {
@@ -115,28 +116,25 @@ module.exports = {
     }
   },
 
-  getAll: (req, res) => {
+  getAll: async (req, res) => {
     try {
       db.sequelize
         .query(
-          "SELECT userId, AttendanceReports.id, fullName, employerId, departement, role, date, status FROM AttendanceReports JOIN Members ON AttendanceReports.userId = Members.id",
-          { type: Sequelize.QueryTypes.SELECT }
-
+          "SELECT AttendanceReports.date, AttendanceReports.month, AttendanceReports.year, AttendanceReports.status, Members.fullName, Members.employerId, Members.departement FROM AttendanceReports JOIN Members ON AttendanceReports.userId = Members.id WHERE AttendanceReports.month='" + req.params.month + "' AND AttendanceReports.year=" + req.params.year + " ORDER BY AttendanceReports.date;",
+          {
+            type: Sequelize.QueryTypes.SELECT
+          }
         )
         .then(result => {
-          console.log(result);
           res.status(200).send({
-            message: "Get all datas.",
+            message: 'Get attendance reports.',
             data: result
-
-          });
+          })
         })
-        .catch(error => console.log(error));
     } catch (error) {
       console.log(error);
     }
   },
-
 
   deleteOne: async (req, res) => {
     try {
@@ -155,12 +153,17 @@ module.exports = {
             id: parseInt(req.params.id),
           }
         }).then(result => {
-          AttendanceReports
-            .findAll({})
-            .then(result2 => {
-              res.send({
-                message: 'Data is successfully deleted.',
-                data: result2
+          db.sequelize
+            .query(
+              "SELECT AttendanceReports.date, AttendanceReports.month, AttendanceReports.year, AttendanceReports.status, Members.fullName, Members.employerId, Members.departement FROM AttendanceReports JOIN Members ON AttendanceReports.userId = Members.id WHERE AttendanceReports.month='" + req.params.month + "' AND AttendanceReports.year=" + req.params.year + ";",
+              {
+                type: Sequelize.QueryTypes.SELECT
+              }
+            )
+            .then(result => {
+              res.status(200).send({
+                message: 'Get attendance reports.',
+                data: result
               })
             })
         })
@@ -169,10 +172,7 @@ module.exports = {
     }
   },
 
-
-
   updateOne: async (req, res) => {
-
     try {
       if (
         !(
@@ -197,12 +197,17 @@ module.exports = {
             }
           })
         .then(result => {
-          AttendanceReports
-            .findAll({})
-            .then(result2 => {
-              res.send({
-                message: 'Data is successfully updated.',
-                data: result2
+          db.sequelize
+            .query(
+              "SELECT AttendanceReports.date, AttendanceReports.month, AttendanceReports.year, AttendanceReports.status, Members.fullName, Members.employerId, Members.departement FROM AttendanceReports JOIN Members ON AttendanceReports.userId = Members.id WHERE AttendanceReports.month='" + req.params.month + "' AND AttendanceReports.year=" + req.params.year + ";",
+              {
+                type: Sequelize.QueryTypes.SELECT
+              }
+            )
+            .then(result => {
+              res.status(200).send({
+                message: 'Get attendance reports.',
+                data: result
               })
             })
         })

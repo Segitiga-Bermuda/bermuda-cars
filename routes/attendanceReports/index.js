@@ -2,9 +2,9 @@ const router = require('express').Router(),
     attController = require('./controller')
 
 router.post('/add', attController.addReport)
-router.get('/', attController.getAll)
-router.put('/:id', attController.updateOne)
-router.delete('/delete/:id', attController.deleteOne)
+router.get('/:year/:month', attController.getAll)
+router.put('/:year/:month/:id', attController.updateOne)
+router.delete('/:year/:month/:id', attController.deleteOne)
 
 
 
