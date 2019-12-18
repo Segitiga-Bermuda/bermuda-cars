@@ -80,6 +80,11 @@ module.exports = {
                 fullName: req.body.fullName,
                 email: req.body.email,
                 password: req.body.password
+            },
+            {
+                where: {
+                    id: req.user.id,
+                }
             }
             ).then(result => {
                 res.send({
@@ -97,6 +102,11 @@ module.exports = {
             Members.update(
                 {
                 avatarPath: req.body.avatarPath
+            },
+            {
+                where: {
+                    id: req.user.id,
+                }
             }
             ).then(result => {
                 res.send({
