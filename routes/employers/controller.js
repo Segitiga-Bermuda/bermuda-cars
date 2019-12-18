@@ -161,4 +161,38 @@ module.exports = {
             console.log(error)
         }
     },
+    viewProfile: (req, res) => {
+        if (req.user.role !== 'Employer') {
+            res.send({
+                message: 'You are not allowed to view other users profile.'
+            })
+
+            return null
+        }
+
+        Members
+            .findAll(
+                {
+                    where: {
+                        id: req.user.id
+                    }
+                },
+                {
+                    attributes: [
+                        'fullName',
+                        'born',
+                        'gender',
+                        'employerId',
+                        'departement',
+                        'role',
+                        'avatarPath'
+                    ]
+                }
+            )
+            .then(result => {
+                res.status(200).send({
+                    result
+                })
+            })
+    }
 }

@@ -6,5 +6,6 @@ router.post('/register', usersController.register)
 router.put('/update/email', usersController.updateEmail)
 router.put('/update/password', usersController.updatePassword)
 router.put('/avatar', usersController.updateAvatar)
+router.get('/view-profile', usersController.viewProfile)
 
 module.exports = router
