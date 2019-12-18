@@ -248,7 +248,7 @@ module.exports = {
             )
             .then(result => {
                 res.status(200).send({
-                    ...result
+                    user: result[0]
                 })
             })
     }
