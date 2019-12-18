@@ -182,7 +182,7 @@ module.exports = {
         }
     },
 
-    updateAvatar: (req, res) => {
+    updateAvatar: async (req, res) => {
         try {
             await Members.update(
                 {

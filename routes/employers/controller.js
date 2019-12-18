@@ -129,7 +129,7 @@ module.exports = {
             console.log(error)
         }
     },
-    updateAvatar: (req, res) => {
+    updateAvatar: async (req, res) => {
         try {
             await Members.update(
                 {
