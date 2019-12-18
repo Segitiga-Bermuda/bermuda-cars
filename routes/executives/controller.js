@@ -71,45 +71,60 @@ module.exports = {
             console.log(error)
         }
     },
-    updateOne:(req,res) => {
+    updateOne: (req, res) => {
         try {
-            const password = await hashPassword(req.body.password)
-            Members.update(
-                {
-                fullName: req.body.fullName,
-                email: req.body.email,
-                password: password
-            },
-            {
-                where: {
-                    id: req.user.id,
-                }
-            }
-            ).then(result => {
-                res.send({
-                    message:"Update Data",
-                    data: result
+            await Members
+                .findAll({
+                    where: {
+                        email: req.body.email
+                    }
                 })
-            })
+                .then(async result => {
+                    if (result.length > 0) {
+                        res.send({
+                            message: 'Email have been used!'
+                        })
+                    } else {
+                        const password = await hashPassword(req.body.password)
+
+                        Members.update(
+                            {
+                                fullName: req.body.fullName,
+                                email: req.body.email,
+                                password: password
+                            },
+                            {
+                                where: {
+                                    id: req.user.id,
+                                }
+                            }
+                        ).then(result => {
+                            res.send({
+                                message: "Update Data",
+                                data: result
+                            })
+                        })
+                    }
+                })
         } catch (error) {
             console.log(error)
         }
     },
 
-    updateAvatar:(req,res) => {
+    updateAvatar: (req, res) => {
         try {
             Members.update(
                 {
-                avatarPath: req.body.avatarPath
-            },
-            {
-                where: {
-                    id: req.user.id,
+                    avatarPath: req.body.avatarPath
+                },
+                {
+                    where: {
+                        id: req.user.id,
+                    }
                 }
-            }
             ).then(result => {
                 res.send({
-                    message:"Update Avatar",
+                    message: "Update Avatar",
                     data: result
                 })
             })

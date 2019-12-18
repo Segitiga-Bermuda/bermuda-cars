@@ -128,49 +128,61 @@ module.exports = {
         }
     },
 
-    updateOne: async (req,res) => {
+    updateOne: async (req, res) => {
         try {
             await Members
-            const password = await hashPassword(req.body.password)
-
-                .update(
-                    
-                    {
-                        fullName: req.body.fullName,
-                        email: req.body.email,
-                        password: password,
-                    },
-                    {
-                        where: {
-                            id: req.user.id,
-                        }
+                .findAll({
+                    where: {
+                        email: req.body.email
                     }
-                ).then(result => {
-                res.send({
-                    message:"Update Data",
-                    data: result
                 })
-            })
+                .then(async result => {
+                    if (result.length > 0) {
+                        res.send({
+                            message: 'Email have been used!'
+                        })
+                    } else {
+                        const password = await hashPassword(req.body.password)
+
+                        Members.update(
+                            {
+                                fullName: req.body.fullName,
+                                email: req.body.email,
+                                password: password
+                            },
+                            {
+                                where: {
+                                    id: req.user.id,
+                                }
+                            }
+                        ).then(result => {
+                            res.send({
+                                message: "Update Data",
+                                data: result
+                            })
+                        })
+                    }
+                })
         } catch (error) {
             console.log(error)
         }
     },
 
 
-    updateAvatar: async (req,res) => {
+    updateAvatar: async (req, res) => {
         try {
             await Members.update(
                 {
-                avatarPath: req.body.avatarPath
-            },
-            {
-                where: {
-                    id: req.user.id,
+                    avatarPath: req.body.avatarPath
+                },
+                {
+                    where: {
+                        id: req.user.id,
+                    }
                 }
-            }
             ).then(result => {
                 res.send({
-                    message:"Update Avatar",
+                    message: "Update Avatar",
                     data: result
                 })
             })
