@@ -114,7 +114,7 @@ module.exports = {
         }
     },
 
-    updateOne: (req, res) => {
+    updateOne: async (req, res) => {
         try {
             await Members
                 .findAll({
