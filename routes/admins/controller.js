@@ -128,15 +128,21 @@ module.exports = {
         }
     },
 
-    updateOne:(req,res) => {
+    updateOne: async (req,res) => {
         try {
-            Members.update(
-                {
-                fullName: req.body.fullName,
-                email: req.body.email,
-                password: req.body.password,
-            }
-            ).then(result => {
+            await Members
+                .update(
+                    {
+                        fullName: req.body.fullName,
+                        email: req.body.email,
+                        password: req.body.password,
+                    },
+                    {
+                        where: {
+                            id: req.user.id,
+                        }
+                    }
+                ).then(result => {
                 res.send({
                     message:"Update Data",
                     data: result
@@ -148,11 +154,16 @@ module.exports = {
     },
 
 
-    updateAvatar:(req,res) => {
+    updateAvatar: async (req,res) => {
         try {
-            Members.update(
+            await Members.update(
                 {
                 avatarPath: req.body.avatarPath
+            },
+            {
+                where: {
+                    id: req.user.id,
+                }
             }
             ).then(result => {
                 res.send({
