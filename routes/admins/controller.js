@@ -128,26 +128,57 @@ module.exports = {
         }
     },
 
-    updateOne: async (req,res) => {
+    updateEmail: async (req, res) => {
         try {
             await Members
+                .findAll({
+                    where: {
+                        email: req.body.email
+                    }
+                })
+                .then(async result => {
+                    if (result.length > 0) {
+                        res.send({
+                            message: 'Email have been used!'
+                        })
+                    } else {
+                        Members.update(
+                            {
+                                email: req.body.email
+                            },
+                            {
+                                where: {
+                                    id: req.user.id,
+                                }
+                            }
+                        ).then(result => {
+                            res.send({
+                                message: "Update email.",
+                                data: result
+                            })
+                        })
+                    }
+                })
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    updatePassword: async (req, res) => {
+        try {
             const password = await hashPassword(req.body.password)
 
-                .update(
-                    
-                    {
-                        fullName: req.body.fullName,
-                        email: req.body.email,
-                        password: password,
-                    },
-                    {
-                        where: {
-                            id: req.user.id,
-                        }
+            await Members.update(
+                {
+                    password: password
+                },
+                {
+                    where: {
+                        id: req.user.id,
                     }
-                ).then(result => {
+                }
+            ).then(result => {
                 res.send({
-                    message:"Update Data",
+                    message: "Update password.",
                     data: result
                 })
             })
@@ -155,22 +186,20 @@ module.exports = {
             console.log(error)
         }
     },
-
-
-    updateAvatar: async (req,res) => {
+    updateAvatar: async (req, res) => {
         try {
             await Members.update(
                 {
-                avatarPath: req.body.avatarPath
-            },
-            {
-                where: {
-                    id: req.user.id,
+                    avatarPath: req.body.avatarPath
+                },
+                {
+                    where: {
+                        id: req.user.id,
+                    }
                 }
-            }
             ).then(result => {
                 res.send({
-                    message:"Update Avatar",
+                    message: "Update Avatar",
                     data: result
                 })
             })
