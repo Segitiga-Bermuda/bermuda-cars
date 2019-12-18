@@ -44,7 +44,7 @@ module.exports = {
   getMonths: (req, res) => {
     db.sequelize
       .query(
-        "SELECT DISTINCT month from Sales WHERE year=" + req.params.year + ";",
+        "SELECT DISTINCT CONCAT(month, ' ', year) AS date, month, year FROM Sales",
         {
           type: Sequelize.QueryTypes.SELECT
         })
