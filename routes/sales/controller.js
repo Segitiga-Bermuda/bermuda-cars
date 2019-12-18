@@ -56,40 +56,47 @@ module.exports = {
       })
   },
   getRevenueReports: async (req, res) => {
-    let join = [];
-
     try {
-      db.sequelize
+      let months = await db.sequelize
         .query(
           "SELECT DISTINCT month from Sales WHERE year=" + req.params.year + ";",
           {
             type: Sequelize.QueryTypes.SELECT
           })
-        .then(async result => {
-          await result.map(element => {
-            db.sequelize
-              .query(
-                "SELECT SUM(Inventories.profit * Sales.sold) as profitTotal, SUM(Inventories.totalCost * Sales.unsold) as totalLoss  FROM Sales JOIN Inventories ON Sales.itemId = Inventories.id WHERE Sales.month='" + element.month + "' AND year=" + req.params.year + ";",
-                { type: Sequelize.QueryTypes.SELECT }
-              )
-              .then(result2 => {
-                res.status(200).send({
-                  message: "Get all datas.",
-                  data: result2
-                });
-              })
-              .catch(error => {
-                console.log(error)
-              });
-          })
-        })
-        .catch(error => {
-          console.log(error)
-        });
+
+      // let rows = months.map(element => {
+      //   let array = []
+      //   db.sequelize
+      //     .query(
+      //       "SELECT Sales.month, Sales.year, SUM(Inventories.profit * Sales.sold) as profitTotal, SUM(Inventories.totalCost * Sales.unsold) as totalLoss  FROM Sales JOIN Inventories ON Sales.itemId = Inventories.id WHERE Sales.month='" + element.month + "' AND year=" + req.params.year + ";",
+      //       { type: Sequelize.QueryTypes.SELECT }
+      //     ).then(result => {
+      //       return result.push(array)
+      //     })
+      //   console.log(array), "asdasd";
+
+      // })
+
+      let array = []
+
+      for (let x = 0; x < months.length; ++x) {
+        let rows = await db.sequelize
+          .query(
+            "SELECT Sales.month, Sales.year, SUM(Inventories.profit * Sales.sold) as profitTotal, SUM(Inventories.totalCost * Sales.unsold) as totalLoss  FROM Sales JOIN Inventories ON Sales.itemId = Inventories.id WHERE Sales.month='" + months[x].month + "' AND year=" + req.params.year + ";",
+            { type: Sequelize.QueryTypes.SELECT }
+          )
+        array.push(...rows)
+      }
+
+      console.log(array);
+
+
+
     } catch (error) {
       console.log(error);
     }
   },
+
   getSaleReports: (req, res) => {
     db.sequelize
       .query(
@@ -105,6 +112,7 @@ module.exports = {
         })
       })
   },
+
   addOne: async (req, res) => {
     try {
       if (
@@ -145,7 +153,6 @@ module.exports = {
 
 
   deleteOne: async (req, res) => {
-
     try {
       if (!(
         req.user.role === 'Admin' ||
@@ -176,10 +183,7 @@ module.exports = {
     }
   },
 
-
-
   updateOne: async (req, res) => {
-
     try {
       if (
         !(
@@ -203,7 +207,6 @@ module.exports = {
           {
             where: {
               id: parseInt(req.params.id)
-
             }
           })
         .then(result => {
@@ -218,19 +221,6 @@ module.exports = {
         })
     } catch (error) {
       console.log(error);
-
-
     }
   },
-
-
-
-
-
-
-
-
-
-
-
 };
