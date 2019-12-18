@@ -3,6 +3,8 @@ const router = require('express').Router(),
 
 router.post('/add', attController.addReport)
 router.get('/', attController.getAll)
+router.put('/:id', attController.updateOne)
+router.delete('/delete/:id', attController.deleteOne)
 
 
 
