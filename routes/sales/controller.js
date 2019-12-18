@@ -64,34 +64,21 @@ module.exports = {
             type: Sequelize.QueryTypes.SELECT
           })
 
-      // let rows = months.map(element => {
-      //   let array = []
-      //   db.sequelize
-      //     .query(
-      //       "SELECT Sales.month, Sales.year, SUM(Inventories.profit * Sales.sold) as profitTotal, SUM(Inventories.totalCost * Sales.unsold) as totalLoss  FROM Sales JOIN Inventories ON Sales.itemId = Inventories.id WHERE Sales.month='" + element.month + "' AND year=" + req.params.year + ";",
-      //       { type: Sequelize.QueryTypes.SELECT }
-      //     ).then(result => {
-      //       return result.push(array)
-      //     })
-      //   console.log(array), "asdasd";
-
-      // })
-
-      let array = []
+      let rows = []
 
       for (let x = 0; x < months.length; ++x) {
-        let rows = await db.sequelize
+        let row = await db.sequelize
           .query(
             "SELECT Sales.month, Sales.year, SUM(Inventories.profit * Sales.sold) as profitTotal, SUM(Inventories.totalCost * Sales.unsold) as totalLoss  FROM Sales JOIN Inventories ON Sales.itemId = Inventories.id WHERE Sales.month='" + months[x].month + "' AND year=" + req.params.year + ";",
             { type: Sequelize.QueryTypes.SELECT }
           )
-        array.push(...rows)
+
+        rows.push(...row)
       }
 
-      console.log(array);
-
-
-
+      res.status(200).send({
+        data: rows
+      })
     } catch (error) {
       console.log(error);
     }
