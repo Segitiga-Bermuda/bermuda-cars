@@ -98,7 +98,7 @@ module.exports = {
                                 email: req.body.email,
                                 password: password,
                                 role: 'User',
-                                avatarPath: './assets/images/person.png',
+                                avatarPath: 'https://cdn.filestackcontent.com/slQeO1MRQysd8mQhPImA',
                                 createdAt: null,
                                 updatedAt: null
                             })
