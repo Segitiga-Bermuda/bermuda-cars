@@ -128,7 +128,7 @@ module.exports = {
         }
     },
 
-    updateOne: async (req, res) => {
+    updateEmail: async (req, res) => {
         try {
             await Members
                 .findAll({
@@ -142,13 +142,9 @@ module.exports = {
                             message: 'Email have been used!'
                         })
                     } else {
-                        const password = await hashPassword(req.body.password)
-
                         Members.update(
                             {
-                                fullName: req.body.fullName,
-                                email: req.body.email,
-                                password: password
+                                email: req.body.email
                             },
                             {
                                 where: {
@@ -157,7 +153,7 @@ module.exports = {
                             }
                         ).then(result => {
                             res.send({
-                                message: "Update Data",
+                                message: "Update email.",
                                 data: result
                             })
                         })
@@ -167,8 +163,29 @@ module.exports = {
             console.log(error)
         }
     },
+    updatePassword: async (req, res) => {
+        try {
+            const password = await hashPassword(req.body.password)
 
-
+            await Members.update(
+                {
+                    password: password
+                },
+                {
+                    where: {
+                        id: req.user.id,
+                    }
+                }
+            ).then(result => {
+                res.send({
+                    message: "Update password.",
+                    data: result
+                })
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    },
     updateAvatar: async (req, res) => {
         try {
             await Members.update(
