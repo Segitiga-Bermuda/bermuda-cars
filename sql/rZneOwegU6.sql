@@ -85,7 +85,22 @@ CREATE TABLE IF NOT EXISTS `Tasks` (
 CREATE TABLE IF NOT EXISTS `AttendanceReports` (
     `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `userId` INT(11) UNSIGNED NOT NULL,
-    `date` DATE NOT NULL,
+    `month` ENUM(
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ) NOT NULL,
+    `year` SMALLINT(4) UNSIGNED NOT NULL,
+    `date` TINYINT(2) UNSIGNED NOT NULL,
     `status` ENUM(
         "Presence",
         "Sick",

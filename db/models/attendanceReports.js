@@ -14,8 +14,20 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER,
                 allowNull: false
             },
+            month: {
+                type: DataTypes.ENUM({
+                    values: [
+                        'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+                    ]
+                }),
+                allowNull: false
+            },
+            year: {
+                type: DataTypes.INTEGER,
+                allowNull: false
+            },
             date: {
-                type: DataTypes.DATE,
+                type: DataTypes.INTEGER,
                 allowNull: false
             },
             status: {

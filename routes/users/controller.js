@@ -244,7 +244,7 @@ module.exports = {
             )
             .then(result => {
                 res.status(200).send({
-                    result
+                    ...result
                 })
             })
     }
