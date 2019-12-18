@@ -198,10 +198,21 @@ module.exports = {
                     }
                 }
             ).then(result => {
-                res.send({
-                    message: "Update Avatar",
-                    data: result
-                })
+                Members
+                    .findAll({
+                        where: {
+                            id: req.user.id
+                        },
+                        attributes: [
+                            'avatarPath'
+                        ]
+                    })
+                    .then(result2 => {
+                        res.status(200).send({
+                            message: 'Update Avatar',
+                            result2
+                        })
+                    })
             })
         } catch (error) {
             console.log(error)

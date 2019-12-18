@@ -151,31 +151,7 @@ module.exports = {
     },
     updatePassword: async (req, res) => {
         try {
-            const password = await hashPassword(req.body.password)
-
             await Members.update(
-                {
-                    password: password
-                },
-                {
-                    where: {
-                        id: req.user.id,
-                    }
-                }
-            ).then(result => {
-                res.send({
-                    message: "Update password.",
-                    data: result
-                })
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    },
-
-    updateAvatar: (req, res) => {
-        try {
-            Members.update(
                 {
                     avatarPath: req.body.avatarPath
                 },
@@ -185,10 +161,54 @@ module.exports = {
                     }
                 }
             ).then(result => {
-                res.send({
-                    message: "Update Avatar",
-                    data: result
-                })
+                Members
+                    .findAll({
+                        where: {
+                            id: req.user.id
+                        },
+                        attributes: [
+                            'avatarPath'
+                        ]
+                    })
+                    .then(result2 => {
+                        res.status(200).send({
+                            message: 'Update Avatar',
+                            result2
+                        })
+                    })
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    updateAvatar: (req, res) => {
+        try {
+            await Members.update(
+                {
+                    avatarPath: req.body.avatarPath
+                },
+                {
+                    where: {
+                        id: req.user.id,
+                    }
+                }
+            ).then(result => {
+                Members
+                    .findAll({
+                        where: {
+                            id: req.user.id
+                        },
+                        attributes: [
+                            'avatarPath'
+                        ]
+                    })
+                    .then(result2 => {
+                        res.status(200).send({
+                            message: 'Update Avatar',
+                            result2
+                        })
+                    })
             })
         } catch (error) {
             console.log(error)
