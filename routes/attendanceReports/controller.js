@@ -118,19 +118,31 @@ module.exports = {
 
   getAll: async (req, res) => {
     try {
-      db.sequelize
+      let users = await db.sequelize
         .query(
-          "SELECT AttendanceReports.date, AttendanceReports.month, AttendanceReports.year, AttendanceReports.status, Members.fullName, Members.employerId, Members.departement FROM AttendanceReports JOIN Members ON AttendanceReports.userId = Members.id WHERE AttendanceReports.month='" + req.params.month + "' AND AttendanceReports.year=" + req.params.year + " ORDER BY AttendanceReports.date;",
+          "SELECT DISTINCT AttendanceReports.userId AS id from AttendanceReports  WHERE AttendanceReports.month='" + req.params.month + "' AND AttendanceReports.year=" + req.params.year + " ORDER BY AttendanceReports.userId;",
           {
             type: Sequelize.QueryTypes.SELECT
-          }
-        )
-        .then(result => {
-          res.status(200).send({
-            message: 'Get attendance reports.',
-            data: result
           })
-        })
+
+      let rows = []
+
+      for (let x = 0; x < users.length; ++x) {
+        let row = await db.sequelize
+          .query(
+            "SELECT AttendanceReports.date, AttendanceReports.month, AttendanceReports.year, AttendanceReports.status, Members.fullName, Members.employerId, Members.departement FROM AttendanceReports JOIN Members ON AttendanceReports.userId = Members.id WHERE AttendanceReports.month='" + req.params.month + "' AND AttendanceReports.year=" + req.params.year + " AND AttendanceReports.userId = " + users[x].id + " ORDER BY AttendanceReports.date;",
+            {
+              type: Sequelize.QueryTypes.SELECT
+            }
+          )
+
+        rows.push(row)
+      }
+
+      res.status(200).send({
+        message: 'Get attendance reports.',
+        data: rows
+      })
     } catch (error) {
       console.log(error);
     }
