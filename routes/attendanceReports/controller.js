@@ -14,11 +14,10 @@ module.exports = {
       }
 
       if (
-        false
-        // currentDate.getHours() < 6 ||
-        // currentDate.getHours() > 16
+        currentDate.getHours() < 6 ||
+        currentDate.getHours() > 16
       ) {
-        res.send({ message: "You Are Late " });
+        res.send({ message: "You Are Late." });
       } else {
         let year = currentDate.getFullYear(),
           month = currentDate.getMonth(),
