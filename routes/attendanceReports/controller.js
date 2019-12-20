@@ -7,8 +7,8 @@ module.exports = {
       let currentDate = new Date();
 
       if (
-        currentDate.getDay() === 0 ||
-        currentDate.getDay() === 6
+        currentDate.getUTCDay() === 0 ||
+        currentDate.getUTCDay() === 6
       ) {
         res.send({ message: "This is weekend." });
       }
@@ -21,7 +21,7 @@ module.exports = {
       } else {
         let year = currentDate.getFullYear(),
           month = currentDate.getMonth(),
-          date = currentDate.getDate()
+          date = currentDate.getUTCDate()
 
         switch (month) {
           case 0:
