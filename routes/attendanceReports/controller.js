@@ -7,21 +7,22 @@ module.exports = {
       let currentDate = new Date();
 
       if (
-        currentDate.getUTCDay() === 0 ||
-        currentDate.getUTCDay() === 6
+        currentDate.getDay() === 0 ||
+        currentDate.getDay() === 6
       ) {
         res.send({ message: "This is weekend." });
       }
 
       if (
-        currentDate.getHours() < 18 ||
-        currentDate.getHours() > 4
+        false
+        // currentDate.getHours() < 18 ||
+        // currentDate.getHours() > 24
       ) {
         res.send({ message: "You Are Late." });
       } else {
         let year = currentDate.getFullYear(),
           month = currentDate.getMonth(),
-          date = currentDate.getUTCDate()
+          date = currentDate.getDate()
 
         switch (month) {
           case 0:
