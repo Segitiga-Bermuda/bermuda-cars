@@ -14,8 +14,8 @@ module.exports = {
       }
 
       if (
-        currentDate.getHours() < 6 ||
-        currentDate.getHours() > 16
+        currentDate.getHours() < 18 ||
+        currentDate.getHours() > 4
       ) {
         res.send({ message: "You Are Late." });
       } else {
