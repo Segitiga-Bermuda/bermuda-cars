@@ -20,7 +20,7 @@ module.exports = {
                     attributes: [
                         'id',
                         'fullName',
-                        'employerId',
+                        'employeeId',
                         'departement',
                         'password',
                         'avatarPath',
@@ -32,7 +32,7 @@ module.exports = {
                         const decision = await comparePassword(req.body.password, result[0].password),
                             id = result[0].id,
                             fullName = result[0].fullName,
-                            employerId = result[0].employerId,
+                            employeeId = result[0].employeeId,
                             departement = result[0].departement,
                             avatarPath = result[0].avatarPath,
                             role = result[0].role
@@ -42,7 +42,7 @@ module.exports = {
                                 {
                                     id,
                                     fullName,
-                                    employerId,
+                                    employeeId,
                                     departement,
                                     avatarPath,
                                     role
@@ -93,7 +93,7 @@ module.exports = {
                                 fullName: req.body.fullName,
                                 born: req.body.born,
                                 gender: req.body.gender,
-                                employerId: 'None',
+                                employeeId: 'None',
                                 departement: 'None',
                                 email: req.body.email,
                                 password: password,
@@ -235,7 +235,7 @@ module.exports = {
                         'fullName',
                         'born',
                         'gender',
-                        'employerId',
+                        'employeeId',
                         'departement',
                         'role',
                         'avatarPath'

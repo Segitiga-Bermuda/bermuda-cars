@@ -10,14 +10,14 @@ CREATE TABLE IF NOT EXISTS `Members` (
         "Male", 
         "Female"
     ) NOT NULL,
-    `employerId` VARCHAR(12) DEFAULT 'None',
+    `employeeId` VARCHAR(12) DEFAULT 'None',
     `departement` VARCHAR(25) DEFAULT 'None',
     `email` VARCHAR(100) NOT NULL UNIQUE,
     `password` VARCHAR(100) NOT NULL,
     `role` ENUM(
         "Admin", 
         "Executive", 
-        "Employer", 
+        "Employee", 
         "User"
     ) NOT NULL,
     `avatarPath` VARCHAR(100) DEFAULT './assets/images/person.png',

@@ -106,7 +106,7 @@ module.exports = {
         !(
           req.user.role === 'Admin' ||
           req.user.role === 'Executive' ||
-          req.user.role === 'Employer'
+          req.user.role === 'Employee'
         )
       ) {
         res.send({

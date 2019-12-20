@@ -130,7 +130,7 @@ module.exports = {
       for (let x = 0; x < users.length; ++x) {
         let row = await db.sequelize
           .query(
-            "SELECT AttendanceReports.date, AttendanceReports.month, AttendanceReports.year, AttendanceReports.status, Members.fullName, Members.employerId, Members.departement FROM AttendanceReports JOIN Members ON AttendanceReports.userId = Members.id WHERE AttendanceReports.month='" + req.params.month + "' AND AttendanceReports.year=" + req.params.year + " AND AttendanceReports.userId = " + users[x].id + " ORDER BY AttendanceReports.date;",
+            "SELECT AttendanceReports.date, AttendanceReports.month, AttendanceReports.year, AttendanceReports.status, Members.fullName, Members.employeeId, Members.departement FROM AttendanceReports JOIN Members ON AttendanceReports.userId = Members.id WHERE AttendanceReports.month='" + req.params.month + "' AND AttendanceReports.year=" + req.params.year + " AND AttendanceReports.userId = " + users[x].id + " ORDER BY AttendanceReports.date;",
             {
               type: Sequelize.QueryTypes.SELECT
             }
@@ -167,7 +167,7 @@ module.exports = {
         }).then(result => {
           db.sequelize
             .query(
-              "SELECT AttendanceReports.date, AttendanceReports.month, AttendanceReports.year, AttendanceReports.status, Members.fullName, Members.employerId, Members.departement FROM AttendanceReports JOIN Members ON AttendanceReports.userId = Members.id WHERE AttendanceReports.month='" + req.params.month + "' AND AttendanceReports.year=" + req.params.year + ";",
+              "SELECT AttendanceReports.date, AttendanceReports.month, AttendanceReports.year, AttendanceReports.status, Members.fullName, Members.employeeId, Members.departement FROM AttendanceReports JOIN Members ON AttendanceReports.userId = Members.id WHERE AttendanceReports.month='" + req.params.month + "' AND AttendanceReports.year=" + req.params.year + ";",
               {
                 type: Sequelize.QueryTypes.SELECT
               }
@@ -211,7 +211,7 @@ module.exports = {
         .then(result => {
           db.sequelize
             .query(
-              "SELECT AttendanceReports.date, AttendanceReports.month, AttendanceReports.year, AttendanceReports.status, Members.fullName, Members.employerId, Members.departement FROM AttendanceReports JOIN Members ON AttendanceReports.userId = Members.id WHERE AttendanceReports.month='" + req.params.month + "' AND AttendanceReports.year=" + req.params.year + ";",
+              "SELECT AttendanceReports.date, AttendanceReports.month, AttendanceReports.year, AttendanceReports.status, Members.fullName, Members.employeeId, Members.departement FROM AttendanceReports JOIN Members ON AttendanceReports.userId = Members.id WHERE AttendanceReports.month='" + req.params.month + "' AND AttendanceReports.year=" + req.params.year + ";",
               {
                 type: Sequelize.QueryTypes.SELECT
               }

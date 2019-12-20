@@ -27,7 +27,7 @@ app.use(
                 method: ['POST']
             },
             {
-                url: '/employers/log-in',
+                url: '/employees/log-in',
                 method: ['POST']
             },
             {
@@ -54,7 +54,7 @@ app.use((err, req, res, next) => {
 app.use('/users', require('./routes/users'))
 app.use('/admins', require('./routes/admins'))
 app.use('/executives', require('./routes/executives'))
-app.use('/employers', require('./routes/employers'))
+app.use('/employees', require('./routes/employees'))
 app.use('/tasks', require('./routes/tasks'))
 app.use('/inventory', require('./routes/inventory'))
 app.use('/attreport', require('./routes/attendanceReports'))

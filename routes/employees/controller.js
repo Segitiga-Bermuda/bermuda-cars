@@ -15,12 +15,12 @@ module.exports = {
                 .findAll({
                     where: {
                         email: req.body.email,
-                        role: 'Employer'
+                        role: 'Employee'
                     },
                     attributes: [
                         'id',
                         'fullName',
-                        'employerId',
+                        'employeeId',
                         'departement',
                         'password',
                         'avatarPath',
@@ -32,7 +32,7 @@ module.exports = {
                         const decision = await comparePassword(req.body.password, result[0].password),
                             id = result[0].id,
                             fullName = result[0].fullName,
-                            employerId = result[0].employerId,
+                            employeeId = result[0].employeeId,
                             departement = result[0].departement,
                             avatarPath = result[0].avatarPath,
                             role = result[0].role
@@ -42,7 +42,7 @@ module.exports = {
                                 {
                                     id,
                                     fullName,
-                                    employerId,
+                                    employeeId,
                                     departement,
                                     avatarPath,
                                     role
@@ -162,7 +162,7 @@ module.exports = {
         }
     },
     viewProfile: (req, res) => {
-        if (req.user.role !== 'Employer') {
+        if (req.user.role !== 'Employee') {
             res.send({
                 message: 'You are not allowed to view other users profile.'
             })
@@ -182,7 +182,7 @@ module.exports = {
                         'fullName',
                         'born',
                         'gender',
-                        'employerId',
+                        'employeeId',
                         'departement',
                         'role',
                         'avatarPath'
