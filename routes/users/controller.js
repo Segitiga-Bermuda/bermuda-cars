@@ -98,7 +98,7 @@ module.exports = {
                                 email: req.body.email,
                                 password: password,
                                 role: 'User',
-                                avatarPath: 'https://cdn.filestackcontent.com/cache=false/output=secure:true/security=policy:eyJleHBpcnkiOiAxNTc2Njc5MTQzLCAiY2FsbCI6IFsicmVhZCIsICJzdGF0IiwgImNvbnZlcnQiLCAicGljayIsICJzdG9yZSJdfQ==,signature:3cf70a18cc92dfaed9e031462833cfaab3c38cf368d624f146c6da6d5be850e6/Sqqb1MpHTWy0xontsAju',
+                                avatarPath: 'https://justanaivedreamer.files.wordpress.com/2019/12/boy.png',
                                 createdAt: null,
                                 updatedAt: null
                             })
